@@ -8,7 +8,11 @@ def page_count(printer_ip):
     page = requests.get(url, verify=False)
     parser = BeautifulSoup(page.content, features="lxml")
     element = parser.find("td", {"id": "UsagePage.EquivalentImpressionsTable.Total.Total"}, "html.parser")
-    return element.getText()
+
+    # ex: 314,159,265.35
+    tmp = element.getText()
+    counter = round(float(tmp.replace(",","")))
+    return counter
 
 if __name__ == "__main__":
     from sys import argv
